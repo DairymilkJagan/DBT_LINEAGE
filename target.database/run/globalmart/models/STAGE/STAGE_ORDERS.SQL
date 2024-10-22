@@ -1,0 +1,24 @@
+
+  create or replace   view QUALDO.dbt_test.STAGE_ORDERS
+  
+   as (
+    SELECT
+--FROM RAW_ORDERS
+    O.*
+--FROM RAW_CUSTOMERS
+    , C.*
+--FROM RAW_PRODUCT
+    , P.*
+    , (O.ORDER_SELLING_PRICE - O.ORDER_COST_PRICE) AS ORDER_PROFIT
+FROM
+    QUALDO.dbt_test.RAW_ORDERS AS O
+LEFT JOIN
+    QUALDO.dbt_test.RAW_CUSTOMER AS C
+ON 
+    C.CUSTOMERID = O.CUSTOMER_ID
+LEFT JOIN
+    QUALDO.dbt_test.RAW_PRODUCT AS P
+ON
+    P.PRODUCTID = O.PRODUCT_ID
+  );
+
